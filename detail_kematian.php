@@ -1,4 +1,5 @@
 <?php
+session_start();
 include 'sidebar.php';
 include 'connection.php';
 
@@ -121,7 +122,8 @@ $data = $rows->fetch_object();
 
                 <div class="table-responsive">
 
-                    <table class="table align-middle">
+                    <div class="table-responsive">
+<table class="table align-middle">
 
                         <tr>
                             <td class="label-title">
@@ -182,6 +184,7 @@ $data = $rows->fetch_object();
                         </tr>
 
                     </table>
+</div>
 
                 </div>
 

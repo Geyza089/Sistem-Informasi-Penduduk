@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 07, 2026 at 05:17 AM
+-- Generation Time: May 10, 2026 at 09:00 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -41,7 +41,6 @@ CREATE TABLE `kelahiran` (
 --
 
 INSERT INTO `kelahiran` (`id`, `nama`, `tanggal`, `kelamin`, `ayah`, `ibu`) VALUES
-(3, 'Bagas Pratama', '2024-01-07', 'Laki-laki', 'Dedi Saputra', 'Rina Marlina'),
 (4, 'Citra Lestari', '2024-01-09', 'Perempuan', 'Andi Wijaya', 'Dewi Kartika'),
 (5, 'Dimas Saputra', '2024-01-11', 'Laki-laki', 'Agus Salim', 'Yuni Astuti'),
 (6, 'Eka Wulandari', '2024-01-13', 'Perempuan', 'Rudi Hartono', 'Maya Sari'),
@@ -115,7 +114,8 @@ CREATE TABLE `keluarga` (
 --
 
 INSERT INTO `keluarga` (`id`, `no_kk`, `kk`, `alamat`, `kec`, `kab`, `prov`) VALUES
-(1, '21121', 'Agus', 'Ranjeng', 'Merak', 'Serang', 'Banten');
+(1, '21121', 'Agus', 'Ranjeng', 'Merak', 'Serang', 'Banten'),
+(2, '121212', 'dda', 'dasads', 'dsa', 'dsa', 'da');
 
 -- --------------------------------------------------------
 
@@ -140,7 +140,8 @@ CREATE TABLE `kematian` (
 --
 
 INSERT INTO `kematian` (`id`, `nama`, `nik`, `tempat`, `tanggal`, `agama`, `kelamin`, `wafat`, `sebab`) VALUES
-(1, 'Amar Yakuf', '13313', 'Purworejo', '2026-05-07', 'Islam', 'Perempuan', '2026-05-08', 'dsad');
+(1, 'Amar Yakuf', '13313', 'Purworejo', '2026-05-07', 'Islam', 'Perempuan', '2026-05-08', 'dsad'),
+(2, 's', '1212', 's', '2026-05-03', 's', 'Laki-laki', '2026-05-09', 'DAS');
 
 -- --------------------------------------------------------
 
@@ -193,20 +194,8 @@ CREATE TABLE `penduduk` (
 --
 
 INSERT INTO `penduduk` (`id`, `nama`, `nik`, `tempat`, `ttl`, `jenis_kelamin`, `alamat`, `agama`, `status`, `pekerjaan`, `kewarganegaraan`) VALUES
-(14, 'Budi Santoso', '3201010101010003', 'Tasikmalaya', '1990-07-15', 'Laki-laki', 'Jl. Kenanga No. 3', 'Islam', 'Menikah', 'Guru', 'WNI'),
-(15, 'Dewi Lestari', '3201010101010004', 'Ciamis', '1997-11-09', 'Perempuan', 'Jl. Anggrek No. 4', 'Islam', 'Belum Menikah', 'Perawat', 'WNI'),
-(16, 'Eko Prasetyo', '3201010101010005', 'Jakarta', '1988-05-17', 'Laki-laki', 'Jl. Dahlia No. 5', 'Islam', 'Menikah', 'Programmer', 'WNI'),
-(17, 'Fitri Handayani', '3201010101010006', 'Bogor', '1999-08-13', 'Perempuan', 'Jl. Flamboyan No. 6', 'Islam', 'Belum Menikah', 'Admin', 'WNI'),
-(18, 'Galih Nugraha', '3201010101010007', 'Sukabumi', '1993-02-25', 'Laki-laki', 'Jl. Cempaka No. 7', 'Islam', 'Menikah', 'Wiraswasta', 'WNI'),
-(19, 'Hani Permata', '3201010101010008', 'Bandung', '2000-10-05', 'Perempuan', 'Jl. Teratai No. 8', 'Islam', 'Belum Menikah', 'Desainer', 'WNI'),
-(24, 'Maman Suherman', '3201010101010013', 'Subang', '1991-09-22', 'Laki-laki', 'Jl. Kenanga No. 13', 'Islam', 'Menikah', 'Petani', 'WNI'),
-(30, 'Slamet Riyadi', '3201010101010019', 'Tasikmalaya', '1990-11-02', 'Laki-laki', 'Jl. Sakura No. 19', 'Islam', 'Menikah', 'Buruh', 'WNI'),
-(33, 'Vina Oktavia', '3201010101010022', 'Bogor', '1999-09-09', 'Perempuan', 'Jl. Melati No. 22', 'Islam', 'Belum Menikah', 'Content Creator', 'WNI'),
-(38, 'Agus Salim', '3201010101010027', 'Cimahi', '1988-02-16', 'Laki-laki', 'Jl. Cempaka No. 27', 'Islam', 'Menikah', 'Satpam', 'WNI'),
-(39, 'Bella Safitri', '3201010101010028', 'Cirebon', '1997-05-23', 'Perempuan', 'Jl. Teratai No. 28', 'Islam', 'Belum Menikah', 'Admin', 'WNI'),
 (46, 'Irfan Maulana', '3201010101010035', 'Jakarta', '1991-01-09', 'Laki-laki', 'Jl. Dahlia No. 35', 'Islam', 'Menikah', 'Wiraswasta', 'WNI'),
-(47, 'Julia Rahma', '3201010101010036', 'Bogor', '1999-04-04', 'Perempuan', 'Jl. Flamboyan No. 36', 'Islam', 'Belum Menikah', 'HRD', 'WNI'),
-(48, 'Kiki Saprudin', '3201010101010037', 'Sukabumi', '1987-10-12', 'Laki-laki', 'Jl. Cempaka No. 37', 'Islam', 'Menikah', 'Petani', 'WNI'),
+(47, 'Julia Rahma', '3201010101010036', 'Bogor', '1999-04-04', 'Perempuan', 'Jl. Flamboyan No. 36', 'Islam', 'Menikah', 'HRD', 'WNI'),
 (52, 'Opik Taufik', '3201010101010041', 'Cirebon', '1993-05-15', 'Laki-laki', 'Jl. Mawar No. 41', 'Islam', 'Menikah', 'Buruh', 'WNI'),
 (53, 'Puspita Dewi', '3201010101010042', 'Majalengka', '1997-09-29', 'Perempuan', 'Jl. Melati No. 42', 'Islam', 'Belum Menikah', 'Kasir', 'WNI'),
 (54, 'Qomarudin', '3201010101010043', 'Subang', '1986-07-17', 'Laki-laki', 'Jl. Kenanga No. 43', 'Islam', 'Menikah', 'Tentara', 'WNI'),
@@ -259,8 +248,7 @@ INSERT INTO `penduduk` (`id`, `nama`, `nik`, `tempat`, `ttl`, `jenis_kelamin`, `
 (101, 'Nabila Putri', '3201010101010090', 'Depok', '2000-04-20', 'Perempuan', 'Jl. Merak No. 90', 'Islam', 'Belum Menikah', 'Mahasiswa', 'WNI'),
 (102, 'Oman Supriatna', '3201010101010091', 'Garut', '1988-05-21', 'Laki-laki', 'Jl. Elang No. 91', 'Islam', 'Menikah', 'Satpam', 'WNI'),
 (103, 'Prita Amelia', '3201010101010092', 'Bandung', '1998-06-22', 'Perempuan', 'Jl. Camar No. 92', 'Islam', 'Belum Menikah', 'Perawat', 'WNI'),
-(104, 'Raka Firmansyah', '3201010101010093', 'Bogor', '1991-07-23', 'Laki-laki', 'Jl. Nuri No. 93', 'Islam', 'Menikah', 'Teknisi', 'WNI'),
-(105, 'Siska Wulandari', '3201010101010094', 'Tasikmalaya', '1999-08-24', 'Perempuan', 'Jl. Kenari No. 94', 'Islam', 'Belum Menikah', 'Kasir', 'WNI');
+(104, 'Raka Firmansyah', '3201010101010093', 'Bogor', '1991-07-23', 'Laki-laki', 'Jl. Nuri No. 93', 'Islam', 'Menikah', 'Teknisi', 'WNI');
 
 -- --------------------------------------------------------
 
@@ -287,7 +275,8 @@ CREATE TABLE `pindah` (
 
 INSERT INTO `pindah` (`id`, `nama`, `nik`, `tempat`, `tanggal`, `agama`, `kelamin`, `alamat`, `tujuan`, `alasan`) VALUES
 (1, 'Khoirul Dwi Hakiki', '212121', 'SDAJI', '2026-04-29', 'da', 'Laki-laki', 'da', 'da', 'da'),
-(2, 'Imanuel Ramdani Naibaho', '3604091802030001', 'Purworejo', '2026-05-06', 'Islam', 'Perempuan', 'Ranjeng', 'rere', 'sssss');
+(2, 'Imanuel Ramdani Naibaho', '3604091802030001', 'Purworejo', '2026-05-06', 'Islam', 'Perempuan', 'Ranjeng', 'rere', 'sssss'),
+(3, 'sa', '12121', 'sa', '2026-05-08', 'sa', 'Perempuan', 'sa', 'as', 'sa');
 
 -- --------------------------------------------------------
 
@@ -308,7 +297,9 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `username`, `email`, `password`) VALUES
 (1, 'aldi', 'jrjrnil@gmail.com', '967c81d0b07ef4e49d3007d7c969a3ee'),
-(2, 'Silvana', 'sipaa089@gmail.com', '9904fd42e4977d5815b5d5679a935ed5');
+(2, 'Silvana', 'sipaa089@gmail.com', '9904fd42e4977d5815b5d5679a935ed5'),
+(3, 'Ajay', 'ajay12@gmail.com', '9904fd42e4977d5815b5d5679a935ed5'),
+(4, 'RANGGAAAAA', 'an@gmail.com', '9904fd42e4977d5815b5d5679a935ed5');
 
 --
 -- Indexes for dumped tables
@@ -371,13 +362,13 @@ ALTER TABLE `kelahiran`
 -- AUTO_INCREMENT for table `keluarga`
 --
 ALTER TABLE `keluarga`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `kematian`
 --
 ALTER TABLE `kematian`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `pendatang`
@@ -395,13 +386,13 @@ ALTER TABLE `penduduk`
 -- AUTO_INCREMENT for table `pindah`
 --
 ALTER TABLE `pindah`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

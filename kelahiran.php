@@ -1,9 +1,18 @@
 <?php
-include "sidebar.php";
+session_start();
+
+if (!isset($_SESSION['username'])) {
+    header("Location: login.php");
+    exit;
+}
+
+include 'sidebar.php';
+include 'connection.php';
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,30 +22,32 @@ include "sidebar.php";
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
     <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
 
     <!-- SweetAlert -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <style>
-
-        *{
+        * {
             font-family: 'Poppins', sans-serif;
         }
 
-        body{
+        body {
             background: linear-gradient(135deg, #eef5ff, #f8fbff);
             min-height: 100vh;
         }
 
-        #main-content{
+        #main-content {
             transition: .3s;
         }
 
-        .topbar{
+        .topbar {
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -45,49 +56,50 @@ include "sidebar.php";
             gap: 15px;
         }
 
-        .page-title h3{
+        .page-title h3 {
             margin: 0;
             font-weight: 700;
             color: #0f172a;
+            font-size: 30px;
         }
 
-        .page-title p{
+        .page-title p {
             margin: 0;
             color: #64748b;
             font-size: 14px;
         }
 
-        .main-card{
+        .main-card {
             border: none;
             border-radius: 28px;
-            background: rgba(255,255,255,.96);
+            background: rgba(255, 255, 255, .96);
             backdrop-filter: blur(10px);
-            box-shadow: 0 15px 40px rgba(0,0,0,.08);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, .08);
             overflow: hidden;
         }
 
-        .card-header-custom{
+        .card-header-custom {
             padding: 28px 32px;
             background: linear-gradient(135deg, #2563eb, #3b82f6);
             color: white;
         }
 
-        .card-header-custom h5{
+        .card-header-custom h5 {
             margin: 0;
             font-weight: 600;
         }
 
-        .card-header-custom p{
+        .card-header-custom p {
             margin: 5px 0 0;
             opacity: .9;
             font-size: 14px;
         }
 
-        .content-area{
+        .content-area {
             padding: 30px;
         }
 
-        .btn-add{
+        .btn-add {
             background: linear-gradient(135deg, #2563eb, #3b82f6);
             border: none;
             color: white;
@@ -101,17 +113,17 @@ include "sidebar.php";
             gap: 10px;
         }
 
-        .btn-add:hover{
+        .btn-add:hover {
             transform: translateY(-2px);
             color: white;
-            box-shadow: 0 8px 20px rgba(37,99,235,.25);
+            box-shadow: 0 8px 20px rgba(37, 99, 235, .25);
         }
 
-        .search-box{
+        .search-box {
             position: relative;
         }
 
-        .search-box .form-control{
+        .search-box .form-control {
             height: 52px;
             border-radius: 14px;
             border: 1px solid #dbe3ef;
@@ -119,67 +131,70 @@ include "sidebar.php";
             box-shadow: none !important;
         }
 
-        .search-box .form-control:focus{
+        .search-box .form-control:focus {
             border-color: #2563eb;
-            box-shadow: 0 0 0 4px rgba(37,99,235,.12) !important;
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, .12) !important;
         }
 
-        .search-box i{
+        .search-box i {
             position: absolute;
             left: 15px;
             top: 16px;
             color: #94a3b8;
         }
 
-        .table{
+        .table {
             margin-top: 25px;
             vertical-align: middle;
+            min-width: 700px;
         }
 
-        .table thead{
+        .table thead {
             background: #f1f5f9;
         }
 
-        .table thead th{
+        .table thead th {
             border: none;
             padding: 18px 15px;
             font-size: 14px;
             font-weight: 700;
             color: #334155;
+            white-space: nowrap;
         }
 
-        .table tbody td{
+        .table tbody td {
             padding: 18px 15px;
             border-color: #eef2f7;
             color: #475569;
         }
 
-        .table tbody tr{
+        .table tbody tr {
             transition: .3s;
         }
 
-        .table tbody tr:hover{
+        .table tbody tr:hover {
             background: #f8fbff;
         }
 
-        .badge-gender{
+        .badge-gender {
             padding: 8px 14px;
             border-radius: 30px;
             font-size: 12px;
             font-weight: 600;
+            display: inline-block;
         }
 
-        .male{
-            background: rgba(59,130,246,.12);
+        .male {
+            background: rgba(59, 130, 246, .12);
             color: #2563eb;
         }
 
-        .female{
-            background: rgba(236,72,153,.12);
+        .female {
+            background: rgba(236, 72, 153, .12);
             color: #db2777;
         }
 
-        .action-btn{
+        .action-btn {
             width: 38px;
             height: 38px;
             border-radius: 12px;
@@ -191,52 +206,85 @@ include "sidebar.php";
             color: white;
         }
 
-        .action-btn:hover{
+        .action-btn:hover {
             transform: translateY(-2px);
             color: white;
         }
 
-        .btn-view{
+        .btn-view {
             background: #2563eb;
         }
 
-        .btn-edit{
+        .btn-edit {
             background: #10b981;
         }
 
-        .btn-delete{
+        .btn-delete {
             background: #ef4444;
         }
 
-        .pagination .page-link{
+        .pagination .page-link {
             border: none;
             margin: 0 4px;
             border-radius: 10px;
             color: #2563eb;
             font-weight: 600;
-            box-shadow: 0 4px 10px rgba(0,0,0,.05);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, .05);
         }
 
-        .pagination .page-link:hover{
+        .pagination .page-link:hover {
             background: #2563eb;
             color: white;
         }
 
-        @media(max-width:768px){
+        @media(max-width:768px) {
 
-            .content-area{
+            #main-content {
+                padding: 85px 15px 20px !important;
+            }
+
+            .content-area {
                 padding: 20px;
             }
 
-        }
+            .page-title h3 {
+                font-size: 24px;
+            }
 
+            .page-title p {
+                font-size: 13px;
+            }
+
+            .btn-add {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .search-form {
+                width: 100%;
+            }
+
+            .table {
+                min-width: 700px;
+            }
+
+            .pagination {
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+
+            .pagination .page-link {
+                font-size: 13px;
+                padding: 8px 12px;
+            }
+        }
     </style>
 
 </head>
 
 <body>
 
-<div class="p-4" id="main-content">
+    <div class="p-4" id="main-content">
 
         <!-- Topbar -->
         <div class="topbar">
@@ -285,16 +333,16 @@ include "sidebar.php";
 
                     <div class="col-md-6">
 
-                        <form action="" method="GET">
+                        <form action="" method="GET" class="search-form">
 
                             <div class="search-box">
 
                                 <i class="bi bi-search"></i>
 
                                 <input type="text"
-                                       class="form-control"
-                                       name="cari"
-                                       placeholder="Cari nama penduduk...">
+                                    class="form-control"
+                                    name="cari"
+                                    placeholder="Cari nama penduduk...">
 
                             </div>
 
@@ -321,96 +369,102 @@ include "sidebar.php";
 
                         <tbody>
 
-                        <?php
+                            <?php
 
-                        include 'connection.php';
+                            $batas = 5;
+                            $halaman = isset($_GET['halaman']) ? (int)$_GET['halaman'] : 1;
+                            $halaman_awal = ($halaman > 1) ? ($halaman * $batas) - $batas : 0;
 
-                        $batas = 5;
-                        $halaman = isset($_GET['halaman']) ? (int)$_GET['halaman'] : 1;
-                        $halaman_awal = ($halaman > 1) ? ($halaman * $batas) - $batas : 0;
+                            $previous = $halaman - 1;
+                            $next = $halaman + 1;
 
-                        $previous = $halaman - 1;
-                        $next = $halaman + 1;
+                            $baris = mysqli_query($kon, "SELECT * FROM kelahiran");
+                            $jumlah_data = mysqli_num_rows($baris);
+                            $total_halaman = ceil($jumlah_data / $batas);
 
-                        $baris = mysqli_query($kon,"SELECT * FROM kelahiran");
-                        $jumlah_data = mysqli_num_rows($baris);
-                        $total_halaman = ceil($jumlah_data / $batas);
+                            $no = $halaman_awal + 1;
 
-                        $no = $halaman_awal + 1;
+                            if (isset($_GET['cari'])) {
 
-                        if(isset($_GET['cari'])){
+                                $cari = $_GET['cari'];
 
-                            $cari = $_GET['cari'];
+                                $data = mysqli_query(
+                                    $kon,
+                                    "SELECT * FROM kelahiran 
+                                     WHERE nama LIKE '%$cari%'"
+                                );
 
-                            $data = mysqli_query($kon,
-                            "SELECT * FROM kelahiran 
-                             WHERE nama LIKE '%".$cari."%'");
+                            } else {
 
-                        }else{
+                                $data = mysqli_query(
+                                    $kon,
+                                    "SELECT * FROM kelahiran 
+                                     LIMIT $halaman_awal, $batas"
+                                );
+                            }
 
-                            $data = mysqli_query($kon,
-                            "SELECT * FROM kelahiran 
-                             LIMIT $halaman_awal, $batas");
-                        }
+                            while ($d = mysqli_fetch_array($data)) {
 
-                        while($d = mysqli_fetch_array($data)){
+                                ?>
 
-                        ?>
+                                <tr>
 
-                            <tr>
+                                    <td><?= $no++; ?></td>
 
-                                <td><?php echo $no++; ?></td>
+                                    <td>
+                                        <strong>
+                                            <?= $d['nama']; ?>
+                                        </strong>
+                                    </td>
 
-                                <td>
-                                    <strong>
-                                        <?php echo $d['nama']; ?>
-                                    </strong>
-                                </td>
+                                    <td>
+                                        <?= date('d F Y', strtotime($d['tanggal'])); ?>
+                                    </td>
 
-                                <td>
-                                    <?php echo date('d F Y', strtotime($d['tanggal'])); ?>
-                                </td>
+                                    <td>
 
-                                <td>
+                                        <?php
+                                        if ($d['kelamin'] == "Laki-laki") {
+                                            echo '<span class="badge-gender male">Laki-laki</span>';
+                                        } else {
+                                            echo '<span class="badge-gender female">Perempuan</span>';
+                                        }
+                                        ?>
 
-                                    <?php
-                                    if($d['kelamin'] == "Laki-laki"){
-                                        echo '<span class="badge-gender male">Laki-laki</span>';
-                                    }else{
-                                        echo '<span class="badge-gender female">Perempuan</span>';
-                                    }
-                                    ?>
+                                    </td>
 
-                                </td>
+                                    <td class="text-center">
 
-                                <td class="text-center">
+                                        <div class="d-flex justify-content-center gap-2">
 
-                                    <a href="detail_kelahiran.php?id=<?php echo $d['id']; ?>"
-                                       class="action-btn btn-view">
+                                            <a href="detail_kelahiran.php?id=<?= $d['id']; ?>"
+                                                class="action-btn btn-view">
 
-                                        <i class="bi bi-eye"></i>
+                                                <i class="bi bi-eye"></i>
 
-                                    </a>
+                                            </a>
 
-                                    <a href="form_edit_kelahiran.php?id=<?php echo $d['id']; ?>"
-                                       class="action-btn btn-edit">
+                                            <a href="form_edit_kelahiran.php?id=<?= $d['id']; ?>"
+                                                class="action-btn btn-edit">
 
-                                        <i class="bi bi-pencil-square"></i>
+                                                <i class="bi bi-pencil-square"></i>
 
-                                    </a>
+                                            </a>
 
-                                    <a href="delete_kelahiran.php?id=<?php echo $d['id']; ?>"
-                                       class="action-btn btn-delete alert_notif">
+                                            <a href="delete_kelahiran.php?id=<?= $d['id']; ?>"
+                                                class="action-btn btn-delete alert_notif">
 
-                                        <i class="bi bi-trash"></i>
+                                                <i class="bi bi-trash"></i>
 
-                                    </a>
+                                            </a>
 
-                                </td>
+                                        </div>
 
-                            </tr>
+                                    </td>
 
-                        <?php } ?>
+                                </tr>
+
+                            <?php } ?>
 
                         </tbody>
 
@@ -426,9 +480,9 @@ include "sidebar.php";
                         <li class="page-item">
 
                             <a class="page-link"
-                            <?php if($halaman > 1){ ?>
-                                href="?halaman=<?php echo $previous ?>"
-                            <?php } ?>>
+                                <?php if ($halaman > 1) { ?>
+                                href="?halaman=<?= $previous ?>"
+                                <?php } ?>>
 
                                 Previous
 
@@ -437,28 +491,28 @@ include "sidebar.php";
                         </li>
 
                         <?php
-                        for($x = 1; $x <= $total_halaman; $x++){
-                        ?>
+                        for ($x = 1; $x <= $total_halaman; $x++) {
+                            ?>
 
-                        <li class="page-item">
+                            <li class="page-item">
 
-                            <a class="page-link"
-                               href="?halaman=<?php echo $x ?>">
+                                <a class="page-link"
+                                    href="?halaman=<?= $x ?>">
 
-                               <?php echo $x ?>
+                                    <?= $x ?>
 
-                            </a>
+                                </a>
 
-                        </li>
+                            </li>
 
                         <?php } ?>
 
                         <li class="page-item">
 
                             <a class="page-link"
-                            <?php if($halaman < $total_halaman){ ?>
-                                href="?halaman=<?php echo $next ?>"
-                            <?php } ?>>
+                                <?php if ($halaman < $total_halaman) { ?>
+                                href="?halaman=<?= $next ?>"
+                                <?php } ?>>
 
                                 Next
 
@@ -476,78 +530,80 @@ include "sidebar.php";
 
     </div>
 
-</div>
+    <!-- JQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
-<!-- SweetAlert -->
-<?php if(@$_SESSION['sukses']){ ?>
+    <!-- SweetAlert -->
+    <?php if (@$_SESSION['sukses']) { ?>
 
-<script>
+        <script>
 
-Swal.fire({
+            Swal.fire({
 
-    icon: 'success',
-    title: 'Berhasil',
-    text: 'Data berhasil ditambahkan',
-    timer: 2500,
-    showConfirmButton: false
+                icon: 'success',
+                title: 'Berhasil',
+                text: 'Data berhasil ditambahkan',
+                timer: 2500,
+                showConfirmButton: false
 
-});
+            });
 
-</script>
+        </script>
 
-<?php unset($_SESSION['sukses']); } ?>
+        <?php unset($_SESSION['sukses']);
+    } ?>
 
-<?php if(@$_SESSION['suksesDel']){ ?>
+    <?php if (@$_SESSION['suksesDel']) { ?>
 
-<script>
+        <script>
 
-Swal.fire({
+            Swal.fire({
 
-    icon: 'success',
-    title: 'Berhasil',
-    text: 'Data berhasil dihapus',
-    timer: 2500,
-    showConfirmButton: false
+                icon: 'success',
+                title: 'Berhasil',
+                text: 'Data berhasil dihapus',
+                timer: 2500,
+                showConfirmButton: false
 
-});
+            });
 
-</script>
+        </script>
 
-<?php unset($_SESSION['suksesDel']); } ?>
+        <?php unset($_SESSION['suksesDel']);
+    } ?>
 
-<!-- Delete Confirm -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Delete Confirm -->
+    <script>
 
-<script>
+        $('.alert_notif').on('click', function () {
 
-$('.alert_notif').on('click', function(){
+            var getLink = $(this).attr('href');
 
-    var getLink = $(this).attr('href');
+            Swal.fire({
 
-    Swal.fire({
+                title: 'Yakin hapus data?',
+                text: 'Data yang dihapus tidak dapat dikembalikan',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#ef4444',
+                cancelButtonColor: '#64748b',
+                confirmButtonText: 'Ya, Hapus',
+                cancelButtonText: 'Batal'
 
-        title: 'Yakin hapus data?',
-        text: 'Data yang dihapus tidak dapat dikembalikan',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#ef4444',
-        cancelButtonColor: '#64748b',
-        confirmButtonText: 'Ya, Hapus',
-        cancelButtonText: 'Batal'
+            }).then((result) => {
 
-    }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = getLink;
+                }
 
-        if(result.isConfirmed){
-            window.location.href = getLink;
-        }
+            });
 
-    });
+            return false;
 
-    return false;
+        });
 
-});
-
-</script>
+    </script>
 
 </body>
+
 </html>

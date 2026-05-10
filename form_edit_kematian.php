@@ -9,210 +9,287 @@ $data = $rows->fetch_object();
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Data Kematian</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
     <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
+
+        *{
+            font-family: 'Poppins', sans-serif;
+        }
+
         body{
-            background: linear-gradient(135deg, #e0f2fe, #f8fafc);
+            background: linear-gradient(135deg, #f4f7ff, #e8f0ff);
             min-height: 100vh;
-            font-family: 'Segoe UI', sans-serif;
         }
 
-        .main-card{
+        #main-content{
+            transition: .3s;
+        }
+
+        .form-card{
+            background: rgba(255,255,255,.96);
             border: none;
-            border-radius: 25px;
+            border-radius: 24px;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 35px rgba(0,0,0,0.08);
         }
 
-        .card-header-custom{
-            background: linear-gradient(135deg, #198754, #157347);
-            padding: 20px;
-        }
-
-        .card-header-custom h4{
-            margin: 0;
+        .form-header{
+            background: linear-gradient(135deg, #dc2626, #b91c1c);
+            padding: 30px;
             color: white;
+        }
+
+        .form-header h3{
+            margin: 0;
+            font-weight: 700;
+        }
+
+        .form-header p{
+            margin: 8px 0 0;
+            opacity: .9;
+            font-size: 14px;
+        }
+
+        .icon-box{
+            width: 70px;
+            height: 70px;
+            border-radius: 18px;
+            background: rgba(255,255,255,.18);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+        }
+
+        .form-body{
+            padding: 35px;
+        }
+
+        .form-label{
             font-weight: 600;
+            color: #334155;
+            margin-bottom: 8px;
         }
 
         .form-control,
         .form-select{
-            border-radius: 12px;
-            padding: 12px;
-            border: 1px solid #dbe2ea;
+            height: 52px;
+            border-radius: 14px;
+            border: 1px solid #dbeafe;
+            background: #f8fbff;
+            padding-left: 16px;
+            transition: .3s;
+            box-shadow: none;
         }
 
         .form-control:focus,
         .form-select:focus{
-            box-shadow: 0 0 0 0.15rem rgba(13,110,253,.15);
-            border-color: #86b7fe;
+            border-color: #dc2626;
+            box-shadow: 0 0 0 0.15rem rgba(220,38,38,.15);
+            background: white;
         }
 
-        .label-title{
-            font-weight: 600;
-            color: #0d6efd;
-            vertical-align: middle;
+        .input-icon{
+            position: relative;
         }
 
-        .table td{
-            padding: 16px;
-            vertical-align: middle;
+        .input-icon i{
+            position: absolute;
+            top: 50%;
+            left: 16px;
+            transform: translateY(-50%);
+            color: #94a3b8;
+            z-index: 10;
         }
 
-        .btn-modern{
-            border-radius: 12px;
-            padding: 10px 24px;
-            font-weight: 500;
-            transition: 0.3s;
+        .input-icon .form-control,
+        .input-icon .form-select{
+            padding-left: 45px;
         }
 
-        .btn-modern:hover{
-            transform: translateY(-2px);
-        }
-
-        .edit-icon{
-            width: 55px;
-            height: 55px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .btn-save{
+            background: linear-gradient(135deg, #dc2626, #b91c1c);
+            border: none;
             color: white;
-            font-size: 24px;
+            padding: 12px 28px;
+            border-radius: 14px;
+            font-weight: 600;
+            transition: .3s;
+            box-shadow: 0 8px 18px rgba(220,38,38,.25);
         }
 
-        .top-button{
-            border-radius: 12px;
-            padding: 10px 15px;
+        .btn-save:hover{
+            transform: translateY(-2px);
+            color: white;
         }
 
-        .main-card{
-            transition: 0.3s;
+        .btn-cancel{
+            background: #e2e8f0;
+            color: #334155;
+            padding: 12px 28px;
+            border-radius: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: .3s;
         }
 
-        .main-card:hover{
-            transform: translateY(-3px);
+        .btn-cancel:hover{
+            background: #cbd5e1;
+            color: #0f172a;
         }
+
+        @media(max-width:768px){
+
+            .form-body{
+                padding: 25px;
+            }
+
+            .btn-save,
+            .btn-cancel{
+                width: 100%;
+                text-align: center;
+            }
+        }
+
     </style>
 </head>
 
 <body>
 
 <div class="p-4" id="main-content">
-        <div class="card main-card">
 
-            <div class="card-header card-header-custom d-flex align-items-center">
+    <div class="row justify-content-center">
 
-                <div class="edit-icon me-3">
-                    <i class="bi bi-pencil-square"></i>
+        <div class="col-lg-9">
+
+            <div class="form-card">
+
+                <!-- Header -->
+                <div class="form-header d-flex align-items-center gap-4">
+
+                    <div class="icon-box">
+                        <i class="bi bi-pencil-square"></i>
+                    </div>
+
+                    <div>
+                        <h3>Edit Data Kematian</h3>
+                        <p>
+                            Perbarui informasi data kematian penduduk
+                        </p>
+                    </div>
+
                 </div>
 
-                <div>
-                    <h4>Edit Data Kematian</h4>
-                    <small class="text-white">
-                        Silakan ubah data sesuai kebutuhan
-                    </small>
-                </div>
+                <!-- Body -->
+                <div class="form-body">
 
-            </div>
+                    <form action="edit_kematian.php" method="POST">
 
-            <div class="card-body p-4">
+                        <div class="row">
 
-                <form action="edit_kematian.php" method="POST">
+                            <div class="col-md-6 mb-4">
+                                <label class="form-label">
+                                    Nama Lengkap
+                                </label>
 
-                    <div class="table-responsive">
+                                <div class="input-icon">
+                                    <i class="bi bi-person"></i>
 
-                        <table class="table align-middle">
-
-                            <tr>
-                                <td class="label-title" width="25%">
-                                    <i class="bi bi-person-fill me-2"></i>Nama
-                                </td>
-                                <td width="2%">:</td>
-                                <td>
                                     <input type="text"
-                                           name="nama"
                                            class="form-control"
+                                           name="nama"
                                            value="<?php echo $data->nama ?>"
                                            required>
-                                </td>
-                            </tr>
+                                </div>
+                            </div>
 
-                            <tr>
-                                <td class="label-title">
-                                    <i class="bi bi-credit-card-2-front-fill me-2"></i>NIK
-                                </td>
-                                <td>:</td>
-                                <td>
+                            <div class="col-md-6 mb-4">
+                                <label class="form-label">
+                                    Nomor Induk Kependudukan
+                                </label>
+
+                                <div class="input-icon">
+                                    <i class="bi bi-credit-card-2-front"></i>
+
                                     <input type="text"
-                                           name="nik"
                                            class="form-control"
+                                           name="nik"
                                            value="<?php echo $data->nik ?>"
                                            required>
-                                </td>
-                            </tr>
+                                </div>
+                            </div>
 
-                            <tr>
-                                <td class="label-title">
-                                    <i class="bi bi-geo-alt-fill me-2"></i>Tempat / Tanggal Lahir
-                                </td>
-                                <td>:</td>
-                                <td>
+                            <div class="col-md-6 mb-4">
+                                <label class="form-label">
+                                    Tempat Lahir
+                                </label>
 
-                                    <div class="row">
+                                <div class="input-icon">
+                                    <i class="bi bi-geo-alt"></i>
 
-                                        <div class="col-md-6 mb-2">
-                                            <input type="text"
-                                                   name="tempat"
-                                                   class="form-control"
-                                                   placeholder="Tempat lahir"
-                                                   value="<?php echo $data->tempat ?>"
-                                                   required>
-                                        </div>
-
-                                        <div class="col-md-6 mb-2">
-                                            <input type="date"
-                                                   name="tanggal"
-                                                   class="form-control"
-                                                   value="<?php echo $data->tanggal ?>"
-                                                   required>
-                                        </div>
-
-                                    </div>
-
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td class="label-title">
-                                    <i class="bi bi-bookmark-fill me-2"></i>Agama
-                                </td>
-                                <td>:</td>
-                                <td>
                                     <input type="text"
-                                           name="agama"
                                            class="form-control"
+                                           name="tempat"
+                                           value="<?php echo $data->tempat ?>"
+                                           required>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 mb-4">
+                                <label class="form-label">
+                                    Tanggal Lahir
+                                </label>
+
+                                <div class="input-icon">
+                                    <i class="bi bi-calendar-event"></i>
+
+                                    <input type="date"
+                                           class="form-control"
+                                           name="tanggal"
+                                           value="<?php echo $data->tanggal ?>"
+                                           required>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 mb-4">
+                                <label class="form-label">
+                                    Agama
+                                </label>
+
+                                <div class="input-icon">
+                                    <i class="bi bi-bookmark"></i>
+
+                                    <input type="text"
+                                           class="form-control"
+                                           name="agama"
                                            value="<?php echo $data->agama ?>"
                                            required>
-                                </td>
-                            </tr>
+                                </div>
+                            </div>
 
-                            <tr>
-                                <td class="label-title">
-                                    <i class="bi bi-gender-ambiguous me-2"></i>Jenis Kelamin
-                                </td>
-                                <td>:</td>
-                                <td>
+                            <div class="col-md-6 mb-4">
+                                <label class="form-label">
+                                    Jenis Kelamin
+                                </label>
+
+                                <div class="input-icon">
+                                    <i class="bi bi-gender-ambiguous"></i>
 
                                     <select class="form-select" name="kelamin">
 
@@ -227,68 +304,73 @@ $data = $rows->fetch_object();
                                         </option>
 
                                     </select>
+                                </div>
+                            </div>
 
-                                </td>
-                            </tr>
+                            <div class="col-md-6 mb-4">
+                                <label class="form-label">
+                                    Tanggal Kematian
+                                </label>
 
-                            <tr>
-                                <td class="label-title">
-                                    <i class="bi bi-calendar-x-fill me-2"></i>Tanggal Wafat
-                                </td>
-                                <td>:</td>
-                                <td>
+                                <div class="input-icon">
+                                    <i class="bi bi-calendar-x"></i>
+
                                     <input type="date"
-                                           name="wafat"
                                            class="form-control"
+                                           name="wafat"
                                            value="<?php echo $data->wafat ?>"
                                            required>
-                                </td>
-                            </tr>
+                                </div>
+                            </div>
 
-                            <tr>
-                                <td class="label-title">
-                                    <i class="bi bi-heartbreak-fill me-2"></i>Sebab Kematian
-                                </td>
-                                <td>:</td>
-                                <td>
+                            <div class="col-md-6 mb-4">
+                                <label class="form-label">
+                                    Penyebab Kematian
+                                </label>
+
+                                <div class="input-icon">
+                                    <i class="bi bi-heartbreak"></i>
+
                                     <input type="text"
-                                           name="sebab"
                                            class="form-control"
+                                           name="sebab"
                                            value="<?php echo $data->sebab ?>"
                                            required>
-                                </td>
-                            </tr>
+                                </div>
+                            </div>
 
-                        </table>
+                        </div>
 
-                    </div>
+                        <!-- Hidden ID -->
+                        <input type="hidden"
+                               name="id"
+                               value="<?php echo $data->id ?>">
 
-                    <input type="hidden"
-                           name="id"
-                           value="<?php echo $data->id ?>">
+                        <!-- Button -->
+                        <div class="d-flex flex-wrap gap-3 mt-4">
 
-                    <div class="mt-4 d-flex gap-2">
+                            <button type="submit"
+                                    name="submit"
+                                    class="btn btn-save">
 
-                        <button type="submit"
-                                name="submit"
-                                class="btn btn-success btn-modern shadow-sm">
+                                <i class="bi bi-check-circle-fill me-2"></i>
+                                Simpan Perubahan
 
-                            <i class="bi bi-save me-2"></i>
-                            Simpan
+                            </button>
 
-                        </button>
+                            <a href="kematian.php"
+                               class="btn btn-cancel">
 
-                        <a href="kematian.php"
-                           class="btn btn-secondary btn-modern shadow-sm">
+                                <i class="bi bi-arrow-left me-2"></i>
+                                Kembali
 
-                            <i class="bi bi-arrow-left-circle me-2"></i>
-                            Batal
+                            </a>
 
-                        </a>
+                        </div>
 
-                    </div>
+                    </form>
 
-                </form>
+                </div>
 
             </div>
 

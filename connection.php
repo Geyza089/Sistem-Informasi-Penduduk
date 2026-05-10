@@ -1,11 +1,14 @@
 <?php
-$hostname = "localhost";
-$database = "pengolahan";
+$hostname  = "localhost";
+$database  = "pengolahan";
 $usernamee = "root";
-$password = "";
+$password  = "";
+
+// koneksi database
 $kon = mysqli_connect($hostname, $usernamee, $password, $database);
-// script cek koneksi
+
+// cek koneksi
 if (!$kon) {
     die("Koneksi Tidak Berhasil: " . mysqli_connect_error());
 }
-?> 
+?>

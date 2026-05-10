@@ -1,5 +1,6 @@
 <?php
-include "sidebar.php";
+session_start();
+include 'sidebar.php';
 ?>
 
 <!DOCTYPE html>
@@ -41,6 +42,8 @@ include "sidebar.php";
             text-decoration: none;
         }
 
+        /* Sidebar */
+
         .sidebar {
             width: 270px;
             height: 100vh;
@@ -48,6 +51,7 @@ include "sidebar.php";
             top: 0;
             left: 0;
             transition: .4s;
+            z-index: 1000;
         }
 
         #main-content {
@@ -56,14 +60,14 @@ include "sidebar.php";
             margin-left: 270px;
         }
 
-        /* Hero Card */
+        /* Dashboard Card */
 
         .dashboard-card {
             margin-top: 35px;
             border: none;
             border-radius: 30px;
             overflow: hidden;
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.92);
             backdrop-filter: blur(10px);
             box-shadow: 0 15px 45px rgba(0, 0, 0, 0.08);
             min-height: 500px;
@@ -103,11 +107,6 @@ include "sidebar.php";
             max-width: 550px;
         }
 
-        .username {
-            color: #2563eb;
-            font-weight: 700;
-        }
-
         .dashboard-btn {
             margin-top: 35px;
             display: inline-flex;
@@ -136,6 +135,7 @@ include "sidebar.php";
             align-items: center;
             height: 100%;
             position: relative;
+            padding: 40px 20px;
         }
 
         .image-wrapper::before {
@@ -153,6 +153,7 @@ include "sidebar.php";
             position: relative;
             z-index: 2;
             animation: float 3s ease-in-out infinite;
+            max-width: 100%;
         }
 
         @keyframes float {
@@ -172,6 +173,15 @@ include "sidebar.php";
         /* Responsive */
 
         @media(max-width: 992px) {
+
+            #main-content {
+                margin-left: 0;
+                padding: 15px;
+            }
+
+            .dashboard-card {
+                margin-top: 80px;
+            }
 
             .dashboard-content {
                 padding: 40px 30px;
@@ -194,21 +204,43 @@ include "sidebar.php";
 
         @media(max-width: 576px) {
 
+            #main-content {
+                padding: 10px;
+            }
+
+            .dashboard-card {
+                border-radius: 20px;
+            }
+
             .main-title {
-                font-size: 30px;
+                font-size: 28px;
             }
 
             .dashboard-content {
-                padding: 35px 20px;
+                padding: 30px 20px;
+            }
+
+            .description {
+                font-size: 14px;
+            }
+
+            .dashboard-btn {
+                width: 100%;
+                justify-content: center;
             }
 
             .dashboard-image {
-                width: 200px;
+                width: 190px;
             }
 
             .image-wrapper::before {
-                width: 240px;
-                height: 240px;
+                width: 220px;
+                height: 220px;
+            }
+
+            .welcome-badge {
+                font-size: 12px;
+                padding: 8px 14px;
             }
         }
     </style>
@@ -238,7 +270,7 @@ include "sidebar.php";
                             <h1 class="main-title">
                                 Selamat Datang,
                                 <br>
-                                <span><?php echo $_SESSION['username']; ?></span>
+                                <span><?php echo htmlspecialchars($username); ?></span>
                             </h1>
 
                             <p class="description">

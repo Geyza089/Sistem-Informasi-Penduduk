@@ -18,86 +18,160 @@ include 'sidebar.php';
 }
 
 body{
-    background: linear-gradient(135deg, #e0f2ff, #f7fbff);
+    background: linear-gradient(135deg, #eef4ff, #f8fbff);
     min-height: 100vh;
 }
 
-/* HEADER */
+/* MAIN CONTENT */
+#main-content{
+    transition: .3s;
+}
+
+/* TOPBAR */
+.topbar{
+    background: white;
+    padding: 18px 25px;
+    border-radius: 22px;
+    box-shadow: 0 4px 25px rgba(0,0,0,0.05);
+    margin-bottom: 25px;
+}
+
+/* TITLE */
 .page-title{
-    font-size: 26px;
+    font-size: 28px;
     font-weight: 700;
-    color: #1e293b;
+    color: #0f172a;
+    margin: 0;
 }
 
 .subtitle{
-    font-size: 13px;
+    font-size: 14px;
     color: #64748b;
 }
 
 /* CARD */
 .form-card{
-    background: rgba(255,255,255,0.92);
-    backdrop-filter: blur(10px);
-    border-radius: 22px;
-    padding: 35px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.06);
-    border: 1px solid rgba(255,255,255,0.4);
+    background: white;
+    border: none;
+    border-radius: 24px;
+    box-shadow: 0 10px 35px rgba(0,0,0,0.06);
+    overflow: hidden;
 }
 
-/* INPUT */
+/* HEADER CARD */
+.form-header{
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    padding: 30px;
+    color: white;
+}
+
+.form-header h3{
+    margin: 0;
+    font-weight: 700;
+}
+
+.form-header p{
+    margin: 8px 0 0;
+    opacity: .9;
+    font-size: 14px;
+}
+
+/* ICON */
+.icon-box{
+    width: 65px;
+    height: 65px;
+    border-radius: 18px;
+    background: rgba(255,255,255,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+}
+
+/* BODY */
+.form-body{
+    padding: 35px;
+}
+
+/* LABEL */
 .form-label{
     font-weight: 600;
     color: #334155;
+    margin-bottom: 8px;
 }
 
+/* INPUT */
 .form-control,
 .form-select{
     border-radius: 14px;
-    padding: 12px;
+    border: 1px solid #dbeafe;
+    padding: 12px 15px;
+    min-height: 50px;
+    box-shadow: none;
+    transition: .3s;
     font-size: 14px;
-    border: 1px solid #dbe4ee;
 }
 
 .form-control:focus,
 .form-select:focus{
     border-color: #2563eb;
-    box-shadow: 0 0 0 0.15rem rgba(37,99,235,.15);
+    box-shadow: 0 0 0 0.15rem rgba(37,99,235,0.15);
+}
+
+textarea.form-control{
+    min-height: 110px;
+    resize: none;
 }
 
 /* BUTTON */
-.btn-primary{
-    background: linear-gradient(135deg, #2563eb, #3b82f6);
+.btn-save{
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
     border: none;
+    color: white;
+    padding: 12px 28px;
     border-radius: 14px;
     font-weight: 600;
-    padding: 12px 20px;
+    transition: .3s;
 }
 
-.btn-primary:hover{
+.btn-save:hover{
     transform: translateY(-2px);
+    color: white;
     box-shadow: 0 8px 20px rgba(37,99,235,.25);
 }
 
-.btn-secondary{
+.btn-cancel{
+    background: #e2e8f0;
+    color: #334155;
+    padding: 12px 28px;
     border-radius: 14px;
-    padding: 12px 20px;
-}
-
-/* TOGGLE */
-.toggle-btn{
-    width: 48px;
-    height: 48px;
-    border-radius: 14px;
-    border: none;
-    background: white;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-}
-
-.section-title{
-    font-size: 15px;
     font-weight: 600;
-    color: #2563eb;
-    margin-bottom: 20px;
+    text-decoration: none;
+    transition: .3s;
+}
+
+.btn-cancel:hover{
+    background: #cbd5e1;
+    color: #0f172a;
+}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+
+    .page-title{
+        font-size: 22px;
+    }
+
+    .form-body{
+        padding: 25px;
+    }
+
+    .btn-save,
+    .btn-cancel{
+        width: 100%;
+        margin-bottom: 10px;
+        text-align: center;
+    }
 }
 </style>
 </head>
@@ -106,110 +180,189 @@ body{
 
 <div class="p-4" id="main-content">
 
-<!-- HEADER -->
-<div class="d-flex align-items-center mb-4">
+    <!-- TOPBAR -->
+    <div class="topbar d-flex justify-content-between align-items-center">
 
-    <button class="toggle-btn me-3" id="button-toggle">
-        <i class="bi bi-list"></i>
-    </button>
+        <div>
+            <h3 class="page-title">
+                Tambah Data Pindah Penduduk
+            </h3>
 
-    <div>
-        <div class="page-title">Tambah Data Pindah Penduduk</div>
-        <div class="subtitle">Isi data perpindahan penduduk dengan lengkap</div>
+            <div class="subtitle">
+                Form input data perpindahan penduduk
+            </div>
+        </div>
+
     </div>
 
-</div>
+    <!-- FORM -->
+    <div class="row justify-content-center">
+        <div class="col-lg-9">
 
-<!-- FORM -->
-<div class="row justify-content-center">
-<div class="col-lg-8">
+            <div class="form-card">
 
-<div class="form-card">
+                <!-- HEADER -->
+                <div class="form-header d-flex align-items-center gap-4">
 
-    <div class="section-title">
-        <i class="bi bi-signpost-split"></i>
-        Form Pindah Penduduk
-    </div>
+                    <div class="icon-box">
+                        <i class="bi bi-signpost-split-fill"></i>
+                    </div>
 
-    <form action="insert_pindah.php" method="POST">
+                    <div>
+                        <h3>Form Pindah Penduduk</h3>
+                        <p>
+                            Lengkapi seluruh data perpindahan dengan benar dan valid.
+                        </p>
+                    </div>
 
-        <div class="row">
+                </div>
 
-            <div class="col-md-6 mb-3">
-                <label class="form-label">Nama</label>
-                <input class="form-control" type="text" name="nama" placeholder="Masukkan nama" required>
-            </div>
+                <!-- BODY -->
+                <div class="form-body">
 
-            <div class="col-md-6 mb-3">
-                <label class="form-label">NIK</label>
-                <input class="form-control" type="text" name="nik" placeholder="Masukkan NIK" required>
-            </div>
+                    <form action="insert_pindah.php" method="POST">
 
-            <div class="col-md-6 mb-3">
-                <label class="form-label">Tempat Lahir</label>
-                <input class="form-control" type="text" name="tempat" placeholder="Contoh: Bandung" required>
-            </div>
+                        <div class="row">
 
-            <div class="col-md-6 mb-3">
-                <label class="form-label">Tanggal Lahir</label>
-                <input class="form-control" type="date" name="tanggal" required>
-            </div>
+                            <div class="col-md-6 mb-4">
+                                <label class="form-label">
+                                    Nama Lengkap
+                                </label>
 
-            <div class="col-md-6 mb-3">
-                <label class="form-label">Agama</label>
-                <input class="form-control" type="text" name="agama" placeholder="Agama" required>
-            </div>
+                                <input type="text"
+                                       class="form-control"
+                                       name="nama"
+                                       placeholder="Masukkan nama lengkap"
+                                       required>
+                            </div>
 
-            <div class="col-md-6 mb-3">
-                <label class="form-label">Jenis Kelamin</label>
-                <select class="form-select" name="kelamin">
-                    <option value="Laki-laki">Laki-laki</option>
-                    <option value="Perempuan">Perempuan</option>
-                </select>
-            </div>
+                            <div class="col-md-6 mb-4">
+                                <label class="form-label">
+                                    Nomor Induk Kependudukan
+                                </label>
 
-            <div class="col-md-6 mb-3">
-                <label class="form-label">Alamat Asal</label>
-                <input class="form-control" type="text" name="alamat" placeholder="Alamat sekarang" required>
-            </div>
+                                <input type="text"
+                                       class="form-control"
+                                       name="nik"
+                                       placeholder="Masukkan NIK"
+                                       required>
+                            </div>
 
-            <div class="col-md-6 mb-3">
-                <label class="form-label">Kota Tujuan</label>
-                <input class="form-control" type="text" name="tujuan" placeholder="Kota tujuan pindah" required>
-            </div>
+                            <div class="col-md-6 mb-4">
+                                <label class="form-label">
+                                    Tempat Lahir
+                                </label>
 
-            <div class="col-12 mb-4">
-                <label class="form-label">Alasan Pindah</label>
-                <textarea class="form-control" name="alasan" rows="3" placeholder="Masukkan alasan pindah" required></textarea>
+                                <input type="text"
+                                       class="form-control"
+                                       name="tempat"
+                                       placeholder="Masukkan tempat lahir"
+                                       required>
+                            </div>
+
+                            <div class="col-md-6 mb-4">
+                                <label class="form-label">
+                                    Tanggal Lahir
+                                </label>
+
+                                <input type="date"
+                                       class="form-control"
+                                       name="tanggal"
+                                       required>
+                            </div>
+
+                            <div class="col-md-6 mb-4">
+                                <label class="form-label">
+                                    Agama
+                                </label>
+
+                                <input type="text"
+                                       class="form-control"
+                                       name="agama"
+                                       placeholder="Masukkan agama"
+                                       required>
+                            </div>
+
+                            <div class="col-md-6 mb-4">
+                                <label class="form-label">
+                                    Jenis Kelamin
+                                </label>
+
+                                <select class="form-select" name="kelamin">
+                                    <option value="Laki-laki">Laki-laki</option>
+                                    <option value="Perempuan">Perempuan</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-6 mb-4">
+                                <label class="form-label">
+                                    Alamat Asal
+                                </label>
+
+                                <input type="text"
+                                       class="form-control"
+                                       name="alamat"
+                                       placeholder="Masukkan alamat asal"
+                                       required>
+                            </div>
+
+                            <div class="col-md-6 mb-4">
+                                <label class="form-label">
+                                    Kota Tujuan
+                                </label>
+
+                                <input type="text"
+                                       class="form-control"
+                                       name="tujuan"
+                                       placeholder="Masukkan kota tujuan"
+                                       required>
+                            </div>
+
+                            <div class="col-12 mb-4">
+                                <label class="form-label">
+                                    Alasan Pindah
+                                </label>
+
+                                <textarea class="form-control"
+                                          name="alasan"
+                                          placeholder="Masukkan alasan pindah"
+                                          required></textarea>
+                            </div>
+
+                        </div>
+
+                        <!-- BUTTON -->
+                        <div class="d-flex flex-wrap gap-3 mt-3">
+
+                            <button type="submit"
+                                    name="submit"
+                                    class="btn btn-save">
+
+                                <i class="bi bi-save-fill me-2"></i>
+                                Simpan Data
+
+                            </button>
+
+                            <a href="pindah.php"
+                               class="btn-cancel">
+
+                                <i class="bi bi-arrow-left-circle me-2"></i>
+                                Batal
+
+                            </a>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
             </div>
 
         </div>
-
-        <div class="d-flex gap-3">
-            <button type="submit" name="submit" class="btn btn-primary">
-                <i class="bi bi-save me-1"></i> Simpan
-            </button>
-
-            <a href="pindah.php" class="btn btn-secondary">
-                Batal
-            </a>
-        </div>
-
-    </form>
+    </div>
 
 </div>
-
-</div>
-</div>
-
-</div>
-
-<script>
-document.getElementById("button-toggle").addEventListener("click", () => {
-    document.getElementById("sidebar").classList.toggle("active-sidebar");
-    document.getElementById("main-content").classList.toggle("active-main-content");
-});
-</script>
 
 </body>
 </html>

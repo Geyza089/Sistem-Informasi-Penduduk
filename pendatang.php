@@ -1,6 +1,13 @@
 <?php
-include "sidebar.php";
-include "connection.php";
+session_start();
+
+if (!isset($_SESSION['username'])) {
+    header("Location: login.php");
+    exit;
+}
+
+include 'sidebar.php';
+include 'connection.php';
 ?>
 
 <!DOCTYPE html>
@@ -10,92 +17,268 @@ include "connection.php";
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Data Pendatang</title>
 
+<!-- Bootstrap -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Bootstrap Icons -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+<!-- Google Font -->
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
+<!-- SweetAlert -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <style>
+
 *{
     font-family: 'Poppins', sans-serif;
 }
 
 body{
-    background: linear-gradient(135deg, #e0f2ff, #f7fbff);
+    background: linear-gradient(135deg, #eef5ff, #f8fbff);
     min-height: 100vh;
+    overflow-x: hidden;
+}
+
+#main-content{
+    transition: .3s;
 }
 
 /* HEADER */
 .page-title{
-    font-size: 26px;
+    font-size: 30px;
     font-weight: 700;
-    color: #1e293b;
+    color: #0f172a;
 }
 
-.subtitle{
-    font-size: 13px;
+.page-subtitle{
     color: #64748b;
-}
-
-/* CARD */
-.card-modern{
-    border: none;
-    border-radius: 22px;
-    background: rgba(255,255,255,0.9);
-    backdrop-filter: blur(10px);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.06);
-}
-
-/* TABLE */
-.table thead{
-    background: linear-gradient(135deg, #2563eb, #3b82f6);
-    color: #fff;
-}
-
-.table thead th{
-    font-weight: 600;
     font-size: 14px;
 }
 
-.table tbody tr{
-    transition: .2s;
+/* INFO CARD */
+.info-card{
+    border: none;
+    border-radius: 22px;
+    background: linear-gradient(135deg, #2563eb, #3b82f6);
+    color: white;
+    box-shadow: 0 10px 30px rgba(37,99,235,.2);
 }
 
-.table tbody tr:hover{
-    background: #f1f7ff;
+/* MAIN CARD */
+.main-card{
+    border: none;
+    border-radius: 24px;
+    background: rgba(255,255,255,.95);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 10px 35px rgba(0,0,0,.07);
 }
 
 /* BUTTON */
-.btn-primary{
+.btn-add{
     background: linear-gradient(135deg, #2563eb, #3b82f6);
     border: none;
+    color: white;
+    padding: 12px 20px;
     border-radius: 14px;
     font-weight: 600;
+    transition: .3s;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
 }
 
-.btn-primary:hover{
+.btn-add:hover{
     transform: translateY(-2px);
+    color: white;
     box-shadow: 0 8px 20px rgba(37,99,235,.25);
 }
 
-.btn-sm{
-    border-radius: 10px;
-}
-
-/* INPUT */
+/* SEARCH */
 .search-box{
     border-radius: 14px;
-    padding: 10px;
+    overflow: hidden;
+    border: 1px solid #dbe4ee;
+    background: white;
+}
+
+.search-box input{
+    border: none;
+    padding: 12px;
+}
+
+.search-box input:focus{
+    box-shadow: none;
+}
+
+.search-box button{
+    border: none;
+    background: #2563eb;
+    color: white;
+    padding: 0 18px;
+}
+
+/* TABLE */
+.table{
+    border-collapse: separate;
+    border-spacing: 0 12px;
+    min-width: 950px;
+}
+
+.table thead th{
+    background: #2563eb;
+    color: white;
+    border: none;
+    padding: 16px;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.table thead th:first-child{
+    border-top-left-radius: 14px;
+    border-bottom-left-radius: 14px;
+}
+
+.table thead th:last-child{
+    border-top-right-radius: 14px;
+    border-bottom-right-radius: 14px;
+}
+
+.table tbody tr{
+    background: white;
+    box-shadow: 0 5px 15px rgba(0,0,0,.04);
+    transition: .3s;
+}
+
+.table tbody tr:hover{
+    transform: translateY(-2px);
+    background: #f8fbff;
+}
+
+.table tbody td{
+    padding: 16px;
+    vertical-align: middle;
+    border: none;
+    font-size: 14px;
+    color: #334155;
+}
+
+.table tbody td:first-child{
+    border-top-left-radius: 14px;
+    border-bottom-left-radius: 14px;
+}
+
+.table tbody td:last-child{
+    border-top-right-radius: 14px;
+    border-bottom-right-radius: 14px;
+}
+
+/* ACTION BUTTON */
+.action-group{
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.action-btn{
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    transition: .3s;
+    text-decoration: none;
+}
+
+.action-btn:hover{
+    transform: scale(1.08);
+    color: white;
+}
+
+.btn-detail{
+    background: #2563eb;
+}
+
+.btn-edit{
+    background: #10b981;
+}
+
+.btn-delete{
+    background: #ef4444;
 }
 
 /* PAGINATION */
+.pagination .page-link{
+    border: none;
+    margin: 0 4px;
+    border-radius: 10px !important;
+    color: #2563eb;
+    font-weight: 600;
+}
+
+.pagination .page-link:hover{
+    background: #2563eb;
+    color: white;
+}
+
 .page-item.active .page-link{
     background: #2563eb;
     border-color: #2563eb;
+    color: white;
 }
-.page-link{
-    border-radius: 10px !important;
-    margin: 0 3px;
+
+/* MOBILE */
+@media(max-width:768px){
+
+    #main-content{
+        padding: 18px !important;
+    }
+
+    .page-title{
+        font-size: 24px;
+    }
+
+    .page-subtitle{
+        font-size: 13px;
+    }
+
+    .main-card .card-body{
+        padding: 18px !important;
+    }
+
+    .btn-add{
+        width: 100%;
+        justify-content: center;
+    }
+
+    .search-box{
+        width: 100%;
+    }
+
+    .table{
+        min-width: 850px;
+    }
+
+    .table tbody td,
+    .table thead th{
+        padding: 14px;
+        font-size: 13px;
+    }
+
+    .pagination{
+        flex-wrap: wrap;
+        gap: 6px;
+    }
+
 }
+
 </style>
 </head>
 
@@ -103,140 +286,316 @@ body{
 
 <div class="p-4" id="main-content">
 
-<!-- HEADER -->
-<div class="d-flex align-items-center justify-content-between mb-4">
+    <!-- HEADER -->
+    <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
 
-    <div class="text-center flex-grow-1">
-        <div class="page-title">Data Pendatang</div>
-        <div class="subtitle">Manajemen data pendatang sistem kependudukan</div>
-    </div>
+        <div>
 
-</div>
+            <div class="page-title">
+                Data Pendatang
+            </div>
 
-<!-- INFO -->
-<div class="card card-modern mb-3">
-    <div class="card-body d-flex align-items-center">
-        <i class="bi bi-info-circle-fill text-primary fs-5"></i>
-        <span class="ms-2">Menampilkan data pendatang yang terdaftar di sistem</span>
-    </div>
-</div>
+            <div class="page-subtitle">
+                Sistem Pengolahan Data Pendatang Berbasis Web
+            </div>
 
-<!-- ACTION -->
-<div class="card card-modern mb-3">
-<div class="card-body">
-    <div class="row align-items-center">
-
-        <div class="col-md-6 mb-2">
-            <a href="tambah_pendatang.php" class="btn btn-primary">
-                <i class="bi bi-plus-lg me-1"></i> Tambah Data
-            </a>
         </div>
 
-        <div class="col-md-6">
-            <form method="GET">
-                <div class="input-group">
-                    <input type="text" name="cari" class="form-control search-box" placeholder="Cari nama pendatang...">
-                    <button class="btn btn-outline-primary">
-                        <i class="bi bi-search"></i>
-                    </button>
+    </div>
+
+    <!-- INFO CARD -->
+    <div class="card info-card mb-4">
+
+        <div class="card-body d-flex align-items-center gap-3">
+
+            <i class="bi bi-people-fill fs-3"></i>
+
+            <div>
+
+                <div class="fw-bold">
+                    Informasi Data
                 </div>
-            </form>
+
+                <small>
+                    Menampilkan seluruh data pendatang yang tersedia pada sistem.
+                </small>
+
+            </div>
+
         </div>
 
     </div>
+
+    <!-- MAIN CARD -->
+    <div class="card main-card">
+
+        <div class="card-body p-4">
+
+            <!-- TOP -->
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+
+                <a href="tambah_pendatang.php" class="btn-add">
+
+                    <i class="bi bi-plus-circle-fill"></i>
+                    Tambah Data
+
+                </a>
+
+                <form method="GET">
+
+                    <div class="input-group search-box">
+
+                        <input
+                            type="text"
+                            name="cari"
+                            class="form-control"
+                            placeholder="Cari nama pendatang..."
+                        >
+
+                        <button type="submit">
+                            <i class="bi bi-search"></i>
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+            <!-- TABLE -->
+            <div class="table-responsive">
+
+                <table class="table align-middle">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>No</th>
+                            <th>Nama</th>
+                            <th>NIK</th>
+                            <th>Kota Asal</th>
+                            <th>Alamat</th>
+                            <th>Keterangan</th>
+                            <th>Aksi</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                    <?php
+
+                    $batas = 5;
+                    $halaman = isset($_GET['halaman']) ? (int)$_GET['halaman'] : 1;
+                    $awal = ($halaman > 1) ? ($halaman * $batas) - $batas : 0;
+
+                    $previous = $halaman - 1;
+                    $next = $halaman + 1;
+
+                    $dataCount = mysqli_query($kon, "SELECT * FROM pendatang");
+                    $total = mysqli_num_rows($dataCount);
+                    $pages = ceil($total / $batas);
+
+                    $no = $awal + 1;
+
+                    if(isset($_GET['cari'])){
+
+                        $cari = $_GET['cari'];
+
+                        $data = mysqli_query(
+                            $kon,
+                            "SELECT * FROM pendatang 
+                            WHERE nama LIKE '%$cari%'"
+                        );
+
+                    } else {
+
+                        $data = mysqli_query(
+                            $kon,
+                            "SELECT * FROM pendatang 
+                            LIMIT $awal,$batas"
+                        );
+
+                    }
+
+                    while($d = mysqli_fetch_array($data)){
+                    ?>
+
+                    <tr>
+
+                        <td class="fw-semibold text-center">
+                            <?= $no++ ?>
+                        </td>
+
+                        <td>
+                            <div class="fw-semibold">
+                                <?= $d['nama'] ?>
+                            </div>
+                        </td>
+
+                        <td><?= $d['nik'] ?></td>
+
+                        <td><?= $d['asal'] ?></td>
+
+                        <td><?= $d['alamat'] ?></td>
+
+                        <td><?= $d['status'] ?></td>
+
+                        <td>
+
+                            <div class="action-group">
+
+                                <a
+                                    href="detail_pendatang.php?id=<?= $d['id'] ?>"
+                                    class="action-btn btn-detail"
+                                >
+                                    <i class="bi bi-eye-fill"></i>
+                                </a>
+
+                                <a
+                                    href="form_edit_pendatang.php?id=<?= $d['id'] ?>"
+                                    class="action-btn btn-edit"
+                                >
+                                    <i class="bi bi-pencil-fill"></i>
+                                </a>
+
+                                <a
+                                    href="delete_pendatang.php?id=<?= $d['id'] ?>"
+                                    class="action-btn btn-delete alert_notif"
+                                >
+                                    <i class="bi bi-trash-fill"></i>
+                                </a>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                    <?php } ?>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            <!-- PAGINATION -->
+            <nav class="mt-4">
+
+                <ul class="pagination justify-content-center">
+
+                    <li class="page-item">
+
+                        <a
+                            class="page-link"
+                            href="?halaman=<?= max(1, $halaman-1) ?>"
+                        >
+                            Previous
+                        </a>
+
+                    </li>
+
+                    <?php for($i=1; $i<=$pages; $i++){ ?>
+
+                        <li class="page-item <?= ($i == $halaman ? 'active' : '') ?>">
+
+                            <a class="page-link" href="?halaman=<?= $i ?>">
+                                <?= $i ?>
+                            </a>
+
+                        </li>
+
+                    <?php } ?>
+
+                    <li class="page-item">
+
+                        <a
+                            class="page-link"
+                            href="?halaman=<?= min($pages, $halaman+1) ?>"
+                        >
+                            Next
+                        </a>
+
+                    </li>
+
+                </ul>
+
+            </nav>
+
+        </div>
+
+    </div>
+
 </div>
-</div>
 
-<!-- TABLE -->
-<div class="card card-modern">
-<div class="card-body table-responsive">
+<!-- JQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<table class="table table-hover align-middle text-center">
-<thead>
-<tr>
-    <th>No</th>
-    <th>Nama</th>
-    <th>NIK</th>
-    <th>Kota Asal</th>
-    <th>Alamat</th>
-    <th>Keterangan</th>
-    <th>Aksi</th>
-</tr>
-</thead>
+<!-- ALERT -->
+<?php if(@$_SESSION['sukses']){ ?>
 
-<tbody>
-<?php
-$batas = 5;
-$halaman = isset($_GET['halaman']) ? (int)$_GET['halaman'] : 1;
-$awal = ($halaman > 1) ? ($halaman * $batas) - $batas : 0;
+<script>
 
-$dataCount = mysqli_query($kon, "SELECT * FROM pendatang");
-$total = mysqli_num_rows($dataCount);
-$pages = ceil($total / $batas);
+Swal.fire({
+    icon: 'success',
+    title: 'Berhasil',
+    text: 'Data berhasil ditambahkan',
+    timer: 2500,
+    showConfirmButton: false
+});
 
-$no = $awal + 1;
+</script>
 
-if(isset($_GET['cari'])){
-    $cari = $_GET['cari'];
-    $data = mysqli_query($kon,"SELECT * FROM pendatang WHERE nama LIKE '%$cari%'");
-} else {
-    $data = mysqli_query($kon,"SELECT * FROM pendatang LIMIT $awal,$batas");
-}
+<?php unset($_SESSION['sukses']); } ?>
 
-while($d = mysqli_fetch_array($data)){
-?>
-<tr>
-    <td><?= $no++ ?></td>
-    <td><?= $d['nama'] ?></td>
-    <td><?= $d['nik'] ?></td>
-    <td><?= $d['asal'] ?></td>
-    <td><?= $d['alamat'] ?></td>
-    <td><?= $d['status'] ?></td>
-    <td class="d-flex justify-content-center gap-1">
+<?php if(@$_SESSION['suksesDel']){ ?>
 
-        <a href="detail_pendatang.php?id=<?= $d['id'] ?>" class="btn btn-sm btn-info text-white">
-            <i class="bi bi-eye"></i>
-        </a>
+<script>
 
-        <a href="form_edit_pendatang.php?id=<?= $d['id'] ?>" class="btn btn-sm btn-success">
-            <i class="bi bi-pencil"></i>
-        </a>
+Swal.fire({
+    icon: 'success',
+    title: 'Berhasil',
+    text: 'Data berhasil dihapus',
+    timer: 2500,
+    showConfirmButton: false
+});
 
-        <a href="delete_pendatang.php?id=<?= $d['id'] ?>" class="btn btn-sm btn-danger alert_notif">
-            <i class="bi bi-trash"></i>
-        </a>
+</script>
 
-    </td>
-</tr>
-<?php } ?>
-</tbody>
-</table>
+<?php unset($_SESSION['suksesDel']); } ?>
 
-</div>
-</div>
+<!-- DELETE CONFIRM -->
+<script>
 
-<!-- PAGINATION -->
-<div class="mt-4 d-flex justify-content-center">
-<ul class="pagination">
+$('.alert_notif').on('click', function(){
 
-<li class="page-item">
-<a class="page-link" href="?halaman=<?= max(1,$halaman-1) ?>">Prev</a>
-</li>
+    var getLink = $(this).attr('href');
 
-<?php for($i=1;$i<=$pages;$i++){ ?>
-<li class="page-item <?= ($i==$halaman?'active':'') ?>">
-<a class="page-link" href="?halaman=<?= $i ?>"><?= $i ?></a>
-</li>
-<?php } ?>
+    Swal.fire({
+        title: 'Hapus Data?',
+        text: 'Data yang dihapus tidak dapat dikembalikan.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#ef4444',
+        cancelButtonColor: '#64748b',
+        confirmButtonText: 'Ya, Hapus',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
 
-<li class="page-item">
-<a class="page-link" href="?halaman=<?= min($pages,$halaman+1) ?>">Next</a>
-</li>
+        if(result.isConfirmed){
+            window.location.href = getLink;
+        }
 
-</ul>
-</div>
+    });
 
-</div>
+    return false;
+
+});
+
+</script>
 
 </body>
 </html>
